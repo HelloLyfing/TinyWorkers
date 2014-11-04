@@ -3,7 +3,7 @@
 # 62进制 => 10进制: 'a' => 0, '9' => 61
 Hex62Chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
 
-Class HexCvter(object):
+class HexCvter(object):
     """Hex Converter"""
 
     @staticmethod
@@ -43,21 +43,21 @@ Class HexCvter(object):
 
         # 1. +1 操作
         pt = 1
-        index = Str62char.find(codelist[-pt]) + 1
+        index = Hex62Chars.find(codelist[-pt]) + 1
         if index <= 61:
-            codelist[-pt] = Str62char[index]
+            codelist[-pt] = Hex62Chars[index]
         while index > 61:
             # +1后发生了进位，当前位补零
-            codelist[-pt] = Str62char[0]
+            codelist[-pt] = Hex62Chars[0]
             pt += 1
             # 遇到了需要添加一位的情况('999' => 'baaa')
             if  pt > len(codelist):
-                codelist = [Str62char[0] for x in xrange(pt)]
-                codelist[0] = Str62char[1]
+                codelist = [Hex62Chars[0] for x in xrange(pt)]
+                codelist[0] = Hex62Chars[1]
                 break
-            index = Str62char.find(codelist[-pt]) + 1
+            index = Hex62Chars.find(codelist[-pt]) + 1
             if index <= 61:
-                codelist[-pt] = Str62char[index]
+                codelist[-pt] = Hex62Chars[index]
                 break
 
         # size超出范围
@@ -66,6 +66,21 @@ Class HexCvter(object):
         
         # 2. 补足位数(size)
         while len(codelist) < size:
-            codelist.insert(0, Str62char[0])
+            codelist.insert(0, Hex62Chars[0])
 
         return ''.join(codelist)
+
+if __name__ == '__main__':
+    import time
+    decimal_src = int(time.time())
+    hex62 = HexCvter._10to62(decimal_src)
+    decimal_new = HexCvter._62to10(hex62)
+    logfmt = 'd_src:[%s](base10) = hex62:[%s](base62) = d_new:[%s](base10) \n' 
+    print logfmt %(decimal_src, hex62, decimal_new)
+    
+    # use _62incr to generate UniqueID-Code
+    # the code-length, outputsize is up to you
+    unique_id1 = HexCvter._62incr(None, size = 10)
+    unique_id2 = HexCvter._62incr(unique_id1, size = 10)
+    logfmt = 'UniqueIDGenerator > id1:[%s] id2:[%s] max-possible-comb(6chars):[%s]' 
+    print logfmt %(unique_id1, unique_id2, 62 ** 6)
