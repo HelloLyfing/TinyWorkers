@@ -1,4 +1,4 @@
 Hello World !
 
-Here are some tiny workers/projects I did that maybe useful for someone else :)
+Here are some tiny works/projects I did that maybe useful for someone else :)
 
