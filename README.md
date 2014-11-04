@@ -1,4 +1,4 @@
 Hello World !
 
-In this Repo, every branch is a tiny project that is easy to download or fetch.
+Here are some tiny workers/projects I did that maybe useful for someone else :)
 
